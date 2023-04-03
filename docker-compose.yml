@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  web:
+    container_name: go_debug_test
+    build: .
+    tty: true
+    volumes:
+      - ./app:/go/src/app
+    ports:
+      - 8080:8080
+      - 2345:2345
+    security_opt:
+      - "apparmor=unconfined"
+    cap_add:
+      - SYS_PTRACE
+    command: >
+      sh -c "
+        go build main.go && go run main.go"
